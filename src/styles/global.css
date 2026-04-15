@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;600;700&display=swap');
+
+:root {
+  --cream: #fdf6ee;
+  --warm-white: #fffaf4;
+  --peach: #f5c9a0;
+  --peach-light: #fde8d0;
+  --rose: #e8957a;
+  --rose-deep: #c96b52;
+  --amber: #d4845a;
+  --amber-light: #f0b488;
+  --brown-soft: #8b6355;
+  --brown-muted: #a07868;
+  --text-dark: #3d2b1f;
+  --text-mid: #6b4c3b;
+  --text-light: #9e7b6a;
+  --bubble-user: linear-gradient(135deg, #e8957a, #d4845a);
+  --bubble-ai: #fffaf4;
+  --shadow-warm: 0 4px 24px rgba(180, 100, 60, 0.12);
+  --shadow-soft: 0 2px 12px rgba(180, 100, 60, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--peach);
+  border-radius: 3px;
+}

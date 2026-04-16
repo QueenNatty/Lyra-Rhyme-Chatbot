@@ -1,10 +1,6 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { Message } from "../types";
 
-const client = new Anthropic({
-  apiKey: import.meta.env.VITE_ANTHROPIC_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+const BACKEND_URL = "http://localhost:3001";
 
 const SYSTEM_PROMPT = `You are Lyra, a warm, cheerful, and deeply caring AI companion who always speaks in rhymes.
 Every single response you give must rhyme — use couplets (AABB) or alternate rhyme (ABAB), whichever fits best.
@@ -22,23 +18,21 @@ export async function sendMessage(
     content: m.content,
   }));
 
-  const stream = await client.messages.stream({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 1024,
-    system: SYSTEM_PROMPT,
-    messages: apiMessages,
+  const response = await fetch(`${BACKEND_URL}/api/chat`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages: apiMessages }),
   });
 
-  let fullText = "";
-  for await (const chunk of stream) {
-    if (
-      chunk.type === "content_block_delta" &&
-      chunk.delta.type === "text_delta"
-    ) {
-      fullText += chunk.delta.text;
-      onChunk(chunk.delta.text);
-    }
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || "Failed to get response from backend");
   }
 
+  const data = await response.json();
+  const fullText = data.reply;
+
+
+  onChunk(fullText);
   return fullText;
 }

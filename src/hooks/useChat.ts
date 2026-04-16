@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { Message, ChatState } from "../types";
-import { sendMessage } from "../services/anthropic";
+import { sendMessage } from "../services/geminiService";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 10);

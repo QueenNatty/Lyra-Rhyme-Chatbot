@@ -13,17 +13,8 @@ const port = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-app.get("/test-gemini", async (req, res) => {
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: [{ role: "user", parts: [{ text: "Say hello in a rhyme" }] }],
-      config: { systemInstruction },
-    });
-    res.json({ success: true, reply: response.text });
-  } catch (error: any) {
-    res.json({ success: false, error: error?.message, full: String(error) });
-  }
+app.get("/ping", (req, res) => {
+  res.send("pong");
 });
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
